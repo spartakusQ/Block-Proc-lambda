@@ -21,8 +21,6 @@ class Main
     @carriages = []
   end
 
-  CARRIAGE_TYPES = {'cargo' => CargoCarriage, 'passenger' => PassengerCarriage}
-
   def menu
     puts %Q(
       Выберете нужное вам меню:
@@ -41,13 +39,13 @@ class Main
     input = gets.to_i
     case input
     when 1
-      #1.Создание станции.
+      #1.Создание станции.rdy
       create_station
     when 2
-      #2.Создание поезда.
+      #2.Создание поезда.rdy
       create_train
     when 3
-      #3.Создание маршрута и управление станциями.
+      #3.Создание маршрута и управление станциями.rdy
       create_route
     when 4
       #4.Назначение маршрута поезду.
@@ -111,5 +109,28 @@ class Main
   rescue RuntimeError => e
     puts e.message
     menu
+  end
+  #маршрутный лист станий (показывает все станции)
+  def station_list
+    stations.each { |station| puts station.station_name } || 'Станций не существует'
+  end
+  #Создание маршрута и управление станциями.
+  def create_route
+      station_list
+      puts 'Выберете начальную станцию маршрута из списка:'
+      input = gets.chomp.capitalize
+      index = @stations.find_index { |station| station.station_name == input }
+      first = @stations[index]
+      puts 'Выберите конечную станцию маршрута из списка:'
+      input = gets.chomp.capitalize
+      index = @stations.find_index { |station| station.station_name == input }
+      last = @stations[index]
+      @route = Route.new(first, last)
+      @routes << @route
+      puts "Маршрут #{route.stations} создан"
+      menu
+    rescue RuntimeError, TypeError => e
+      puts e.message
+      retry
   end
 end
