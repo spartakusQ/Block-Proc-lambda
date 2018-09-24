@@ -38,6 +38,10 @@ class TrainStation
     @@station_name
   end
 
+  def each_train
+    @trains.each { |train| yield train }
+  end
+
   protected
 
   def validate!
