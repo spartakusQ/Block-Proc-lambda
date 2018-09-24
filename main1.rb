@@ -84,4 +84,32 @@ class Main
     puts "Станция #{name}  создана"
     menu
   end
+
+  #создание поезда
+  def create_train
+    puts 'Поезд с каким номером хотите создать?'
+    puts '1 - пассажирский; 2 - грузовой'
+    input = gets.chomp.to_i
+
+    case input
+    when 1
+      puts 'Для создания пассажирского поезда, введите номер поезда '
+      number = gets.chomp
+      @train = PassengerTrain.new(number)
+      @trains << train
+      puts "Поезд номер #{number}  пассажирского типа создан"
+      menu
+    when 2
+      puts 'Для создания грузового поезда, введите номер поезда'
+      number = gets.chomp
+      @train = CargoTrain.new(number)
+      @trains << train
+      puts "Поезд номер #{number} грузового типа создан"
+      menu
+    end
+    #обработка кода ошибки RuntimeError
+  rescue RuntimeError => e
+    puts e.message
+    menu
+  end
 end
