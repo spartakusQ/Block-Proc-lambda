@@ -11,6 +11,8 @@ class Train
 
   VALID_NUMBER = /^[a-z\d]{3}-?[a-z\d]{2}$/i
 
+  @@trains = {}
+
   def initialize(number)
     @number = number
     @carriage = []

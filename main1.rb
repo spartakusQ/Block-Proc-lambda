@@ -21,6 +21,8 @@ class Main
     @carriages = []
   end
 
+  CARRIAGE_TYPES = {'cargo' => CargoCarriage, 'passenger' => PassengerCarriage}
+
   def menu
     puts %Q(
       Выберете нужное вам меню:
@@ -39,13 +41,13 @@ class Main
     input = gets.to_i
     case input
     when 1
-      #1.Создание станции.rdy
+      #1.Создание станции.
       create_station
     when 2
-      #2.Создание поезда.rdy
+      #2.Создание поезда.
       create_train
     when 3
-      #3.Создание маршрута и управление станциями.rdy
+      #3.Создание маршрута и управление станциями.
       create_route
     when 4
       #4.Назначение маршрута поезду.
@@ -88,7 +90,6 @@ class Main
     puts 'Поезд с каким номером хотите создать?'
     puts '1 - пассажирский; 2 - грузовой'
     input = gets.chomp.to_i
-
     case input
     when 1
       puts 'Для создания пассажирского поезда, введите номер поезда '
@@ -132,5 +133,43 @@ class Main
     rescue RuntimeError, TypeError => e
       puts e.message
       retry
+  end
+  #модуль выбор поезда из списка
+  def invalid_number
+    puts 'Некорректный номер'
+  end
+
+  def invalid_name
+    puts 'Неккоретное имя'
+  end
+
+  def selected_train
+    number = gets.chomp
+    index = @trains.find_index { |train| train.number == number }
+    index.nil? ? invalid_number && menu : @train = @trains[index]
+  end
+
+  #Назначение маршрута поезду.
+  def route_train
+    if trains.empty?
+      puts 'Сначала необходимо создать поезд'
+    elsif stations.empty?
+      puts 'Сначала необходимо создать станцию'
+    else
+      puts 'Какой поезд? (введите номер)'
+      number = gets.chomp
+      train = trains.detect{|train| train.number == number}
+      unless train
+        puts 'Поезда с таким номером нет'
+      else
+        puts 'На какую станцию? (название)'
+        name = gets.chomp
+        station = stations.detect{|station| station.station_name == name}
+        if station.nil?
+          puts 'Такой станции нет'
+        end
+      end
+    end
+    menu
   end
 end
