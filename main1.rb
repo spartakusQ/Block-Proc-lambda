@@ -63,7 +63,7 @@ class Main
       move_train
     when 8
       #8.Просматривать список станций и список поездов на станции.
-      station_list
+      station_menu
     when 9
       #9.Просмотр данных о поезде.
       train_info
@@ -172,4 +172,70 @@ class Main
     end
     menu
   end
+  #Добавление выгоны к поезду.
+  #создание меню для добавления вагонов
+  def menu_carriage
+    puts 'Выберите какой вагон вы хотите прицепить?'
+    puts '1 - пассажирский'
+    puts '2 - грузовой'
+    input = gets.chomp.to_i
+
+    case input
+    when 1
+      puts 'Для создания пассажирского вагона введите номер вагона'
+      num = gets.chomp
+      puts 'Для создания пассажирского вагона введите количество мест'
+      seats = gets.chomp
+      @carriage = PassengerCarriage.new(num, seats)
+    when 2
+      puts 'Для создания пассажирского вагона введите номер вагона'
+      num = gets.chomp
+      puts 'Для создания грузового вагона введите объем'
+      capacity = gets.chomp
+      @carriage = CargoCarriage.new(num, capacity)
+    else puts 'Вы ввели неправильный тип вагона'
+         menu
+    end
+  end
+
+  def add_carriage
+    menu_carriage
+    puts 'Выберите поезд(по номеру) к которому хотите прицепить вагон:'
+    selected_train.add_carriage(carriage)
+    puts "К #{@train.number} прицеплен вагон #{carriage.class} кол-во вагонов - #{@train.carriages.size}"
+    menu
+  rescue RuntimeError, TypeError => e
+    puts e.message
+    retry
+  end
+
+  #Отцепить вагоны от поезда.
+  def unhook_carriage
+    puts 'Выберите поезд(по номеру) от которого хотите отцепить вагон:'
+    selected_train.remove_carriage
+    puts "От поезда #{@train.number} отцеплен вагон типа #{@carriage.type}"
+    puts "Кол-во вагонов - #{@train.carriages.size}"
+    menu
+  end
+  #Перемещать поезд по маршруту вперёд и назад.
+  def move_train
+    puts 'Выберите в каком направлении хотите отправить поезд:'
+    puts '1 - вперёд; 2 - назад'
+    input = gets.chomp.to_i
+    case input
+    when 1
+      #добавить метод move_next
+      puts 'Введите номер поезда, который хотите отправить вперед'
+      selected_train.move_next
+      puts "Поезд #{train.number} прибыл на станцию #{@train.current_station.name}"
+      menu
+    when 2
+      #добавить метод move_previous
+      puts 'Введите номер поезда, который хотите отправить назад'
+      selected_train.move_previous
+      puts "Поезд #{train.number} прибыл на станцию #{@train.current_station.name}"
+      menu
+    end
+  end
+
 end

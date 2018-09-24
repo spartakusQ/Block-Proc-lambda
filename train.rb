@@ -39,12 +39,9 @@ class Train
     @speed = 0 if @speed < 0
   end
 
-  def add_carriage
-    if speed.zero?
-      self.carriage += 1
-    else
-      puts "Для прицепки вагонов, поезд должен стоять."
-    end
+  def add_carriage(carriage)
+    stop
+    @carriages << carriage
   end
 
   def remove_carriage
@@ -93,6 +90,20 @@ class Train
 
   def each_carriage
     @carriages.each { |carriage| yield carriage }
+  end
+
+  def move_next
+    return if last_station?
+    current_station.depart_train(self)
+    @station_index += 1
+    current_station.add_train(self)
+  end
+
+  def move_previous
+    return if first_station?
+    current_station.depart_train(self)
+    @station_index -= 1 if @station_index > 0
+    current_station.add_train(self)
   end
 
   protected
