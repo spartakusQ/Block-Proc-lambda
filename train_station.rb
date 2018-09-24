@@ -1,6 +1,7 @@
+require_relative 'validation'
 class TrainStation
   include InstanceCounter
-  include Validation
+  include Validate
   attr_reader :station_name, :trains
   @@station_name = []
 
@@ -45,7 +46,7 @@ class TrainStation
   protected
 
   def validate!
-    raise 'Название станции должно быть больше 3 символов' if name.length < 3
-    raise 'Станция с таким именем уже существует!' if find
+    raise 'Название станции должно быть больше 3 символов' if station_name.length < 3
+    raise 'Станция с таким именем уже существует!' if station_name == @@station_name
   end
 end

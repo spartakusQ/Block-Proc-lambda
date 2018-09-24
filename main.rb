@@ -14,8 +14,8 @@ CARRIAGE_TYPES = {'cargo' => CargoCarriage, 'passenger' => PassengerCarriage}
 
 puts %Q(
   Выберете нужное вам меню:
-  1.Создание станции. rdy
-  2.Создание поезда. rdy
+  1.Создание станции.
+  2.Создание поезда.
   3.Создание маршрута и управление станциями.
   4.Назначение маршрута поезду.
   5.Добавление выгоны к поезду.
@@ -32,7 +32,7 @@ loop do
 case input
   when 1
       puts 'C каким названием?'
-      name = gets.chomp
+      name = gets.chomp.to_s
       stations << TrainStation.new(name)
   when 2
     puts 'Поезд с каким номером хотите создать?'
@@ -102,7 +102,7 @@ case input
       puts 'От какого? (введите номер)'
       number = gets.chomp
       train = trains.detect{|train| train.number == number}
-      unless train
+      if train
         puts 'Поезда с таким номером нет'
       elsif train.carriages.empty?
         puts 'У этого поезда и так нет вагонов'

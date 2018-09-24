@@ -1,6 +1,6 @@
 class Route
 
-  include Validation
+  include Validate
   attr_reader :stations, :from, :to
 
   def initialize(from, to)

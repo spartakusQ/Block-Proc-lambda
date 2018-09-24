@@ -15,7 +15,9 @@ module InstanceCounter
   end
 
   module InstanceMethods
+
     protected
+    
     def register_instance
       self.class.send(:register_instance)
     end
