@@ -1,4 +1,4 @@
-require_relative 'main1.rb'
+require_relative 'main.rb'
 
 start = Main.new
 start.menu
