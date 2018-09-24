@@ -22,6 +22,7 @@ puts %Q(
   6.Отцепить вагоны от поезда.
   7.Перемещать поезд по маршруту вперёд и назад.
   8.Просматривать список станций и список поездов на станции.
+  9.Просмотр данных о поезде.
   0.Выход из меню.
   )
 loop do
@@ -138,6 +139,9 @@ case input
         station.show_trains
       end
     end
+  when 9
+    puts 'Информация о поездах.'
+    selected_train.each_carriage { |carriage| puts carriage.to_s }
   when 0
     puts 'Счастливого пути!'
     exit
