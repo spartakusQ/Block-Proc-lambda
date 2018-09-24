@@ -87,6 +87,10 @@ class Train
     @@trains[number]
   end
 
+  def each_carriage
+    @carriages.each { |carriage| yield carriage }
+  end
+
   protected
 
   def validate!
