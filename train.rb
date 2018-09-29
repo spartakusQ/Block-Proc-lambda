@@ -112,5 +112,4 @@ class Train
     raise 'Номер поезда неправильного формата' if number.to_s !~ VALID_NUMBER
   end
 
-
 end

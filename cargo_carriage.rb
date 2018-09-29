@@ -1,4 +1,3 @@
-#класс грузового вагона, родительским является класс вагон
 class CargoCarriage < Carriage
   def initialize(num, capacity)
     @num = num.to_i

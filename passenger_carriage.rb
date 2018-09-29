@@ -1,4 +1,3 @@
-#класс пассажирского вагона, родительским является вагон
 class PassengerCarriage < Carriage
   def initialize(num, seats)
     @num = num.to_i
